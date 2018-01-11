@@ -196,7 +196,7 @@
 
 var active_item = null;	
 
-	document.querySelectorAll('.nav.drop input[name="level-0"]').forEach ( function (el) {
+	document.querySelectorAll('.nav.drop > ul > li > input').forEach ( function (el) { // Disable standard keyboard behaviour on inputs
 		
 		el.onkeyup = el.onkeydown = el.onkeypress = function(e) {
 			
@@ -236,21 +236,41 @@ var active_item = null;
 				
 			});
 			
-			el.checked = true;
-			el.setAttribute('data-checked', 'true');
-			el.focus();
 			
 		}
 		
+			el.checked = true;
+			el.setAttribute('data-checked', 'true');
+			el.focus();
+		
+		
 		return false;
 
+	}
+
+	function blurEvent(e) {
+
+/*
+		if (!document.querySelector('.nav.drop :focus')) {
+		console.log('blur');
+			
+			document.querySelectorAll('.nav.drop [data-checked]').forEach( function (el) {
+				
+				el.checked = false;
+				el.removeAttribute('data-checked');
+				
+			});
+			
+		}
+*/
+		
 	}
 
 	document.querySelectorAll('.nav.drop input').forEach ( function (el) {
 		
 		el.addEventListener('click', focusItem);
 		el.addEventListener('focus', function(e) {
-			
+
 			if (!e.target.getAttribute('data-checked')) {
 				
 				focusItem(e);
@@ -258,6 +278,8 @@ var active_item = null;
 			}
 			
 		});
+		
+		el.addEventListener('blur', blurEvent);
 		
 		el.addEventListener('keyup', function (e) {
 
@@ -273,13 +295,30 @@ var active_item = null;
 
 			if (e.key === 'ArrowDown') { // Focus on sub nav
 				
-				console.log(e.target.parentNode.querySelector('ul'));
+				document.querySelectorAll('.nav.drop input').forEach ( function (el) {
+					
+					el.removeEventListener('blur', blurEvent);
+					
+				});
+	
 				if (e.target.parentNode.querySelector('ul').querySelector('input')) {
+				console.log(e.target.parentNode.querySelector('ul'));
 					
 					e.stopPropagation();
 					e.target.parentNode.querySelector('ul').querySelector('input').focus();
 				
+
+				} else { // Focus on any child ul with a[href]
+					
+					
 				}
+
+				document.querySelectorAll('.nav.drop input').forEach ( function (el) {
+					
+					el.addEventListener('blur', blurEvent);
+					
+				});
+
 // 				e.target.parentNode.querySelector('ul').querySelector('input').focus();
 				
 			}
