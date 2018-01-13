@@ -1,0 +1,101 @@
+<link rel="styleSheet" href="accessible-drop-nav.css" type="text/css" media="screen">
+
+<h1>Keyboard-accessible drop-down navigation</h1>
+
+<a tabindex="0">Focusable before</a>
+
+<div class="nav drop">
+	
+	<ul>
+		
+		<li>
+		
+				<a>One</a>
+				
+				<input type="radio" name="level-0">
+				
+				<ul>
+					
+					<li>
+					
+							<a>One 1</a>
+						
+							<input type="radio" name="level-0-1">
+
+							<ul>
+								
+								<li>
+								
+									<a href=#>One 1 1</a>
+								
+								</li>
+								
+								<li>
+								
+									<a href=#>One 1 2</a>
+								
+								</li>
+								
+							</ul>
+						
+					</li>
+					
+					<li>
+						
+							<a>One 2</a>
+						
+							<input type="radio" name="level-0-1">
+	
+							<ul>
+								
+								<li>
+								
+									<a href=# tabindex="0">One 2 1</a>
+								
+								</li>
+								
+								<li>
+								
+									<a href=#>One 2 2</a>
+								
+								</li>
+								
+							</ul>
+						
+					</li>
+					
+				</ul>
+				
+		</li>
+		
+		<li>
+		
+			<a href=# tabindex="-1">Two</a>
+			
+			<input type="radio" name="level-0">
+			
+			<ul> 
+				
+				<li>
+				
+					<a href=#>Two 1</a>
+				
+				</li>
+				
+				<li>
+				
+					<a href=#>Two 2</a>
+				
+				</li>
+				
+			</ul>
+		
+		</li>
+		
+	</ul>
+
+</div>
+
+<a tabindex="0">Focusable after</a>
+
+<script src="accessible-drop-nav.js" type="text/javascript"></script>
