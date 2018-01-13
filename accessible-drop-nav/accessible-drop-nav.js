@@ -173,3 +173,4 @@ var active_item = null;
 	});
 	
 	// When focused on a top-level item, bottom arrow key should move focus to its first child item
+
