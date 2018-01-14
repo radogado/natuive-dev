@@ -33,8 +33,12 @@ nav.drop li {
 nav.drop li li {
   display: block; }
 
-nav.drop input:not(:checked) ~ ul {
+nav.drop ul ul, nav.drop li li:not(:focus) ul {
   display: none; }
+
+nav.drop input:checked ~ ul, nav.drop input:focus ~ ul,
+nav.drop li:focus ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded] {
+  display: block; }
 
 nav.drop input {
   -webkit-appearance: none;
@@ -56,3 +60,10 @@ nav.drop li li input {
 
 nav.drop a[href] ~ input {
   z-index: -1; }
+
+nav.drop li[tabindex] {
+  background: url(../images/select.png) right center no-repeat;
+  background-position-x: calc(100% - 1em); }
+
+nav.drop li li[aria-haspopup] {
+  background-image: url(../images/select-right.png); }
