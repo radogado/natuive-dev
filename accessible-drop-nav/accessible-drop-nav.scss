@@ -1,11 +1,11 @@
-.nav.drop :focus {
+nav.drop :focus {
 	
 	outline: solid 2px blue;
 	outline-offset: -.4em;
 
 }
 
-.nav.drop ul ul {
+nav.drop ul ul {
 	
 	padding: 0;
 	position: absolute;
@@ -15,14 +15,14 @@
 
 }
 
-.nav.drop ul ul ul {
+nav.drop ul ul ul {
 	
 	margin-left: 100%;
 	top: 0;
 
 }
 
-.nav.drop li {
+nav.drop li {
 	
 	display: inline-block;
 	vertical-align: top;
@@ -32,14 +32,14 @@
 	
 }
 
-.nav.drop li > a {
+nav.drop li > a {
 	
 	padding: 1em;
 	display: block;
 
 }
 
-.nav.drop li {
+nav.drop li {
 	
 /* 		padding-left: 0; */
 	z-index: 0;
@@ -48,19 +48,19 @@
 	
 }
 
-.nav.drop li li {
+nav.drop li li {
 	
 	display: block;
 
 }
 
-.nav.drop input:not(:checked) ~ ul {
+nav.drop input:not(:checked) ~ ul {
 	
 	display: none;
 
 }
 
-.nav.drop input {
+nav.drop input {
 	
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -78,13 +78,13 @@
 				
 }
 
-.nav.drop li li input {
+nav.drop li li input {
 
 	background-image: url(../images/select-right.png);
 
 }
 
-.nav.drop a[href] ~ input {
+nav.drop a[href] ~ input {
 
 	z-index: -1;
 
