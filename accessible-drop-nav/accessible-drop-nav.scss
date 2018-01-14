@@ -61,7 +61,7 @@ nav.drop ul ul, nav.drop li li:not(:focus) ul {
 }
 
 nav.drop input:checked ~ ul, nav.drop input:focus ~ ul, 
-nav.drop li:focus ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded] {
+nav.drop li:focus ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
 	
 	display: block;
 
