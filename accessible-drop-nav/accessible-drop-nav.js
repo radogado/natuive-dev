@@ -41,9 +41,11 @@ document.querySelectorAll('nav.drop li').forEach(function (el) {
 
 	el.addEventListener('focus', function (e) {
 		
-		if (e.target.querySelector('ul')) {
+		var el = e.target;
+		el.parentNode.setAttribute('aria-expanded', true);
+		if (el.querySelector('ul')) {
 
-			e.target.querySelector('ul').setAttribute('aria-expanded', 'true');
+			el.querySelector('ul').setAttribute('aria-expanded', 'true');
 
 		}
 		
@@ -73,9 +75,25 @@ document.querySelectorAll('nav.drop li').forEach(function (el) {
 	}
 */
 
+// parent blurs, child focuses, script hides child
+
 	el.addEventListener('blur', function (e) {
-		
-		
+	
+		// if previously focused element is this one's parent li, enable this child's parent ul
+				
+		var current_item = e.target;
+
+		current_item.parentNode.childNodes.forEach(function (el) {
+
+			if (el === current_item && el.nodeName === 'LI' && el.querySelector('ul')) {
+			console.log(el);
+	
+				el.querySelector('ul').removeAttribute('aria-expanded');
+			
+			}
+			
+		});
+
 	});
 	
 });
@@ -96,14 +114,16 @@ window.addEventListener('click', function (e) { // Close the nav when clicking o
 
 document.querySelector('nav.drop').addEventListener('click', function (e) {
 	
-	console.log(e.target);
+// 	console.log(e.target);
 	
 });
 
 document.querySelector('nav.drop').addEventListener('keyup', function (e) {
 	
+/*
 	console.log(e.target);
 	console.log(e.key);
+*/
 	
 	// Check for sibling or children to expand on control keys Left/Right/etc
 	
