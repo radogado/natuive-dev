@@ -3,7 +3,7 @@
 
 // No-JS version works with clicking/tapping. Only JS version supports keyboard and doesn't need the inputs. So, delete them and process focusing and keyboard actions on the li element. Add aria-expanded to focused li's sub nav
 
-// To do: on sub nav focus, hide other top-level li's sub navs
+// To do: support multiple nav.drop
 
 function closest(el, selector) { // Thanks http://gomakethings.com/ditching-jquery/
 
@@ -29,12 +29,6 @@ document.querySelectorAll('nav.drop input').forEach(function (el) {
 	
 });
 
-document.querySelector('nav.drop').addEventListener('blur', function (e) {
-	
-	console.log('blur');
-	
-});
-
 document.querySelectorAll('nav.drop li').forEach(function (el) {
 	
 	el.setAttribute('tabindex', 0);
@@ -49,8 +43,20 @@ document.querySelectorAll('nav.drop li').forEach(function (el) {
 
 		}
 		
+		var current_item = e.target;
+
+		current_item.parentNode.childNodes.forEach(function (el) {
+
+			if (el !== current_item && el.nodeName === 'LI' && el.querySelector('ul')) {
+
+				el.querySelector('ul').removeAttribute('aria-expanded');
+			
+			}
+			
+		});
+
 	});
-	
+
 	el.addEventListener('keyup', function (e) {
 		
 		if (e.key === 'Enter' && e.target.querySelector('a[href]')) {
@@ -80,13 +86,23 @@ document.querySelectorAll('nav.drop li').forEach(function (el) {
 	el.addEventListener('blur', function (e) {
 	
 		// if previously focused element is this one's parent li, enable this child's parent ul
+		if (!closest(e.relatedTarget, 'nav.drop')) {
+			console.log(closest(e.relatedTarget, 'nav.drop'));	
+			
+			document.querySelectorAll('nav.drop ul').forEach ( function (el) {
 				
+				el.removeAttribute('aria-expanded');
+				
+			});
+			return;
+			
+		}
+
 		var current_item = e.target;
 
 		current_item.parentNode.childNodes.forEach(function (el) {
 
 			if (el === current_item && el.nodeName === 'LI' && el.querySelector('ul')) {
-			console.log(el);
 	
 				el.querySelector('ul').removeAttribute('aria-expanded');
 			
