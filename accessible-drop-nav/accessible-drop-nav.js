@@ -128,6 +128,20 @@ window.addEventListener('click', function (e) { // Close the nav when clicking o
 	
 });
 
+window.addEventListener('touchend', function (e) { // Close the nav when clicking outside
+
+	if (!closest(e.target, 'nav.drop li')) {
+
+		document.querySelectorAll('nav.drop ul').forEach ( function (el) {
+			
+			el.removeAttribute('aria-expanded');
+			
+		});
+		
+	}
+	
+});
+
 document.querySelector('nav.drop').addEventListener('click', function (e) {
 	
 // 	console.log(e.target);
@@ -142,6 +156,19 @@ document.querySelector('nav.drop').addEventListener('keyup', function (e) {
 */
 	
 	// Check for sibling or children to expand on control keys Left/Right/etc
+
+	if (e.key === 'Escape') {
+console.log(e);
+		
+		document.querySelectorAll('nav.drop ul').forEach ( function (el) {
+			
+			el.removeAttribute('aria-expanded');
+			
+		});
+		
+		document.querySelector(':focus').blur();
+		
+	}
 	
 });
 

@@ -28,7 +28,6 @@ nav.drop li {
 	vertical-align: top;
 	margin: 0;
 	padding: 0;
-	padding-right: 2em;
 	
 }
 
@@ -97,10 +96,11 @@ nav.drop a[href] ~ input {
 
 }
 
-nav.drop li[tabindex] {
+nav.drop li[aria-haspopup] {
 	
 	background: url(../images/select.png) right center no-repeat;
 	background-position-x: calc(100% - 1em);
+	padding-right: 2em;
 				
 }
 
