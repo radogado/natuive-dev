@@ -31,6 +31,12 @@ nav.drop li {
 	
 }
 
+nav.drop li:not([tabindex]) {
+
+	padding-right: 2em;
+
+}
+
 nav.drop li > a {
 	
 	padding: 1em;
@@ -110,3 +116,12 @@ nav.drop li li[aria-haspopup] {
 				
 }
 
+html:not(.can-touch) { // Hover rules here
+	
+	nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul {
+		
+		display: block;
+		
+	}
+	
+}

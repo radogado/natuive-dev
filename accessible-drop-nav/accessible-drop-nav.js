@@ -4,6 +4,8 @@
 // No-JS version works with clicking/tapping. Only JS version supports keyboard and doesn't need the inputs. So, delete them and process focusing and keyboard actions on the li element. Add aria-expanded to focused li's sub nav
 
 // To do: support multiple nav.drop
+// √ To do: hover
+// To do: z-index when sub nav overlaps top-level li
 
 function closest(el, selector) { // Thanks http://gomakethings.com/ditching-jquery/
 
