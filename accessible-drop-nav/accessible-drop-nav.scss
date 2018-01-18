@@ -6,8 +6,14 @@ nav.drop {
 
 nav.drop :focus {
 	
-	outline: solid 2px blue;
-	outline-offset: -.4em;
+	outline: solid 2px rgba(0,0,0,.2);
+	outline-offset: -.3em;
+
+}
+
+nav.drop ul {
+	
+	padding: 0;
 
 }
 
@@ -34,6 +40,7 @@ nav.drop li {
 	vertical-align: top;
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 	
 }
 
@@ -47,6 +54,13 @@ nav.drop li > a {
 	
 	padding: 1em;
 	display: block;
+
+}
+
+nav.drop a[href] {
+	
+	z-index: 1;
+	position: relative;
 
 }
 
@@ -68,6 +82,7 @@ nav.drop li li {
 nav.drop ul ul, nav.drop li li:not(:focus) ul {
 	
 	display: none;
+	z-index: 2;
 
 }
 
@@ -75,7 +90,6 @@ nav.drop input:checked ~ ul, nav.drop input:focus ~ ul,
 nav.drop li:focus ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
 	
 	display: block;
-	z-index: 1;
 
 }
 
@@ -85,26 +99,15 @@ nav.drop input {
 	-moz-appearance: none;
 	display: block;
 	position: absolute;
-	margin: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 100%;
+	margin: -4.75em 0 0 0;
+	width: 100%; // iOS doesn't work with left/right
+	height: 100%; 
+	background: linear-gradient(45deg, transparent 75%, #000 75%) 0 0 no-repeat;
+	background-size: 1em 1em;
+	background-position: calc(100% - 1em);
+	border: none;
+	border-radius: 0;
 				
-}
-
-nav.drop input {
-
-	background: url(../images/select.png) right center no-repeat;
-	background-position-x: calc(100% - .75em);
-
-}
-
-nav.drop li li input {
-
-	background-image: url(../images/select-right.png);
-
 }
 
 nav.drop li[aria-haspopup]:after {
@@ -115,24 +118,17 @@ nav.drop li[aria-haspopup]:after {
 	width: 1em;
 	height: 1em;
 	top: .5em;
-	background: linear-gradient(45deg, transparent 75%, #000 75%) 0 0;
+	background: linear-gradient(45deg, transparent 75%, #000 75%) 0 0 no-repeat;
 	background-size: 1em 1em;
-	background-repeat: no-repeat;
 	transform: rotate(135deg);
 
 }
 
 nav.drop li li[aria-haspopup]:after {
 	
-	right: 1.25em;
+	right: 1em;
 	top: 1em;
 	transform: rotate(45deg);
-
-}
-
-nav.drop a[href] ~ input {
-
-	z-index: -1;
 
 }
 
@@ -142,14 +138,41 @@ nav.drop li[aria-haspopup] {
 				
 }
 
-html:not(.can-touch) { // Hover rules here
-	
-	nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul {
+@media (min-width: 600px) {
+
+	html:not(.can-touch) { // Hover rules here
 		
-		display: block;
-		z-index: 1;
-		background: var(--nav-bg);
+		nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul {
+			
+			display: block;
+	// 		z-index: 1;
+			background: var(--nav-bg);
+			
+		}
 		
 	}
+
+}
+
+@media (max-width: 599.9px) {
+
+	nav.drop ul ul {
+		
+		position: static;
+		width: calc(100% + 2em);
 	
+	}
+
+	nav.drop li {
+		
+		width: 100%;
+	
+	}
+
+	nav.drop ul ul ul {
+		
+		margin: 0;	
+
+	}
+
 }

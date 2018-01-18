@@ -37,7 +37,7 @@ document.querySelectorAll('nav.drop li').forEach(function (el) {
 	el.setAttribute('tabindex', 0);
 
 	el.addEventListener('focus', function (e) {
-		
+
 		var el = e.target;
 		el.parentNode.setAttribute('aria-expanded', true);
 		if (el.querySelector('ul')) {
@@ -57,6 +57,20 @@ document.querySelectorAll('nav.drop li').forEach(function (el) {
 			}
 			
 		});
+
+	});
+
+	el.addEventListener('click', function (e) {
+
+		if (e.target === document.activeElement || e.target.parentNode === document.activeElement) {
+
+/*
+			console.log(e.target.parentNode);
+			console.log(document.activeElement);
+			document.activeElement.blur();
+*/
+			
+		}
 
 	});
 
@@ -90,7 +104,6 @@ document.querySelectorAll('nav.drop li').forEach(function (el) {
 	
 		// if previously focused element is this one's parent li, enable this child's parent ul
 		if (!closest(e.relatedTarget, 'nav.drop')) {
-			console.log(closest(e.relatedTarget, 'nav.drop'));	
 			
 			document.querySelectorAll('nav.drop ul').forEach ( function (el) {
 				
@@ -161,7 +174,6 @@ document.querySelector('nav.drop').addEventListener('keyup', function (e) {
 	// Check for sibling or children to expand on control keys Left/Right/etc
 
 	if (e.key === 'Escape') {
-console.log(e);
 		
 		document.querySelectorAll('nav.drop ul').forEach ( function (el) {
 			
