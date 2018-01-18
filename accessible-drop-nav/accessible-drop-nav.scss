@@ -47,7 +47,7 @@ nav.drop li > a {
 nav.drop li {
 	
 /* 		padding-left: 0; */
-	z-index: 0;
+// 	z-index: 0;
 	position: relative;
 	white-space: nowrap;
 	
@@ -69,6 +69,7 @@ nav.drop input:checked ~ ul, nav.drop input:focus ~ ul,
 nav.drop li:focus ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
 	
 	display: block;
+	z-index: 1;
 
 }
 
@@ -121,6 +122,8 @@ html:not(.can-touch) { // Hover rules here
 	nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul {
 		
 		display: block;
+		z-index: 1;
+		background: #fff;
 		
 	}
 	
