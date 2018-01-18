@@ -3417,12 +3417,11 @@ button.search-submit {
   display: flex;
   flex-wrap: wrap; }
 
-body.home .lightbox.gallery, body.archive .lightbox.gallery {
+body.home .lightbox.gallery, body.archive .lightbox.gallery, body.search-results .lightbox.gallery {
   max-height: 20em;
   overflow: hidden;
   position: relative; }
-
-body.home .lightbox.gallery:before, body.archive .lightbox.gallery:before {
+body.home .lightbox.gallery:before, body.archive .lightbox.gallery:before, body.search-results .lightbox.gallery:before {
   content: '';
   position: absolute;
   width: 100%;
