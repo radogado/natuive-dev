@@ -1,3 +1,9 @@
+nav.drop {
+
+	--nav-bg: #fff;
+
+}
+
 nav.drop :focus {
 	
 	outline: solid 2px blue;
@@ -11,7 +17,7 @@ nav.drop ul ul {
 	position: absolute;
 	left: 0;
 	top: 3em;
-	background: #fff;
+	background: var(--nav-bg);
 
 }
 
@@ -79,21 +85,48 @@ nav.drop input {
 	-moz-appearance: none;
 	display: block;
 	position: absolute;
-/* 		background: red; */
 	margin: 0;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	background: url(../images/select.png) right center no-repeat;
-	background-position-x: calc(100% - 1em);
 				
+}
+
+nav.drop input {
+
+	background: url(../images/select.png) right center no-repeat;
+	background-position-x: calc(100% - .75em);
+
 }
 
 nav.drop li li input {
 
 	background-image: url(../images/select-right.png);
+
+}
+
+nav.drop li[aria-haspopup]:after {
+
+	content: '';
+	position: absolute;
+	right: .5em;
+	width: 1em;
+	height: 1em;
+	top: .5em;
+	background: linear-gradient(45deg, transparent 75%, #000 75%) 0 0;
+	background-size: 1em 1em;
+	background-repeat: no-repeat;
+	transform: rotate(135deg);
+
+}
+
+nav.drop li li[aria-haspopup]:after {
+	
+	right: 1.25em;
+	top: 1em;
+	transform: rotate(45deg);
 
 }
 
@@ -105,15 +138,7 @@ nav.drop a[href] ~ input {
 
 nav.drop li[aria-haspopup] {
 	
-	background: url(../images/select.png) right center no-repeat;
-	background-position-x: calc(100% - 1em);
 	padding-right: 2em;
-				
-}
-
-nav.drop li li[aria-haspopup] {
-	
-	background-image: url(../images/select-right.png);
 				
 }
 
@@ -123,7 +148,7 @@ html:not(.can-touch) { // Hover rules here
 		
 		display: block;
 		z-index: 1;
-		background: #fff;
+		background: var(--nav-bg);
 		
 	}
 	

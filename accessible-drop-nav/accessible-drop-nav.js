@@ -5,7 +5,8 @@
 
 // To do: support multiple nav.drop
 // √ To do: hover
-// To do: z-index when sub nav overlaps top-level li
+// √ To do: z-index when sub nav overlaps top-level li
+// √ To do: arrows without PNG images
 
 function closest(el, selector) { // Thanks http://gomakethings.com/ditching-jquery/
 
