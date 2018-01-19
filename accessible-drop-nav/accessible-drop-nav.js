@@ -25,6 +25,8 @@ function closest(el, target) { // Thanks http://gomakethings.com/ditching-jquery
 
 }
 
+
+/* –––  */
 function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 	
 	if (!closest(e.target, 'nav.drop li')) {
