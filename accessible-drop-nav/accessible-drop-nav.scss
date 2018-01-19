@@ -144,16 +144,21 @@ nav.drop li[aria-haspopup] {
 		
 		nav.drop ul ul ul:not([aria-expanded]) {
 		
-			transition: 0.1s .2s;
+			transition: .1s .2s;
 			opacity: 0;
 		
+		}
+		
+		nav.drop > ul > li > ul li {
+			
+			background: var(--nav-bg);
+			
 		}
 
 		nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul {
 			
 			max-height: none;
 			visibility: visible;
-			background: var(--nav-bg);
 			opacity: 1;
 			
 		}
