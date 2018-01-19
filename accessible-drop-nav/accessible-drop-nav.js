@@ -3,16 +3,17 @@
 
 // No-JS version works with clicking/tapping. Only JS version supports keyboard and doesn't need the inputs. So, delete them and process focusing and keyboard actions on the li element. Add aria-expanded to focused li's sub nav
 
-// To do: support multiple nav.drop
+// √ To do: support multiple nav.drop
 // √ To do: hover
 // √ To do: z-index when sub nav overlaps top-level li
 // √ To do: arrows without PNG images
+// To do: when focusin on a top-level item, hide its grandchildren
 
-function closest(el, selector) { // Thanks http://gomakethings.com/ditching-jquery/
+function closest(el, target) { // Thanks http://gomakethings.com/ditching-jquery/ – Accepts either a selector string or an actual element
 
     for ( ; el && el !== document; el = el.parentNode ) {
 
-		if (el.matches(selector)) {
+		if (typeof target === 'string' ? el.matches(target) : el === target) {
 			
 			return el;
 
@@ -24,166 +25,173 @@ function closest(el, selector) { // Thanks http://gomakethings.com/ditching-jque
 
 }
 
-// Delete all trigger inputs, add tabindex=0 to each li
-
-document.querySelectorAll('nav.drop input').forEach(function (el) {
+function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 	
-	el.outerHTML = '';
-	
-});
+	if (!closest(e.target, 'nav.drop li')) {
 
-document.querySelectorAll('nav.drop li').forEach(function (el) {
-	
-	el.setAttribute('tabindex', 0);
-
-	el.addEventListener('focus', function (e) {
-
-		var el = e.target;
-		el.parentNode.setAttribute('aria-expanded', true);
-		if (el.querySelector('ul')) {
-
-			el.querySelector('ul').setAttribute('aria-expanded', 'true');
-
-		}
-		
-		var current_item = e.target;
-
-		current_item.parentNode.childNodes.forEach(function (el) {
-
-			if (el !== current_item && el.nodeName === 'LI' && el.querySelector('ul')) {
-
-				el.querySelector('ul').removeAttribute('aria-expanded');
+		document.querySelectorAll('nav.drop ul').forEach ( function (el) {
 			
+			el.removeAttribute('aria-expanded');
+			
+		});
+		
+	}
+	
+}
+
+function initDropNav(el) {
+
+	// Delete all trigger inputs, add tabindex=0 to each li
+	
+	el.querySelectorAll('input').forEach(function (el) {
+		
+		el.outerHTML = '';
+		
+	});
+	
+	el.querySelectorAll('li').forEach(function (el) {
+		
+		el.setAttribute('tabindex', 0);
+	
+		el.addEventListener('focus', function (e) {
+	
+			var el = e.target;
+	
+			el.parentNode.setAttribute('aria-expanded', true);
+			if (el.querySelector('ul')) {
+	
+				el.querySelector('ul').setAttribute('aria-expanded', 'true');
+	
+			}
+			
+			var current_item = e.target;
+	
+			current_item.parentNode.childNodes.forEach(function (el) {
+	
+				if (el !== current_item && el.nodeName === 'LI' && el.querySelector('ul')) {
+	
+					el.querySelector('ul').removeAttribute('aria-expanded');
+				
+				}
+				
+			});
+			
+		});
+	
+		el.addEventListener('click', function (e) {
+	
+			if (e.target === document.activeElement || e.target.parentNode === document.activeElement) {
+	
+	/*
+				console.log(e.target.parentNode);
+				console.log(document.activeElement);
+				document.activeElement.blur();
+	*/
+				
+			}
+	
+		});
+	
+		el.addEventListener('keyup', function (e) {
+			
+			if (e.key === 'Enter' && e.target.querySelector('a[href]')) {
+				
+				e.target.querySelector('a[href]').click();
+				
 			}
 			
 		});
-
-	});
-
-	el.addEventListener('click', function (e) {
-
-		if (e.target === document.activeElement || e.target.parentNode === document.activeElement) {
-
-/*
-			console.log(e.target.parentNode);
-			console.log(document.activeElement);
-			document.activeElement.blur();
-*/
-			
+		
+		if (el.querySelector('ul')) {
+	
+			el.setAttribute('aria-haspopup', true);
+		
 		}
+	
+	/*
+		if (el.querySelector('a')) {
+	
+			el.querySelector('a').setAttribute('tabindex', -1);
+		
+		}
+	*/
+	
+	// parent blurs, child focuses, script hides child
+	
+		el.addEventListener('blur', function (e) {
+			
+			var this_nav = closest(e.target, 'nav.drop');
+			
+			if (!closest(e.relatedTarget, this_nav)) { // if next focused item is in this nav, not any nav.drop. if e.relatedTarget is a child of this_nav
+	
+				document.querySelectorAll('nav.drop ul').forEach ( function (el) {
+					
+					el.removeAttribute('aria-expanded');
+					
+				});
+				return;
+				
+			}
+	
+			// If it's the last child of the last child of a top-level nav item which isn't the last child
+			var el = e.target;
+			if (!el.nextElementSibling && 
+				el.parentNode.parentNode.nodeName === 'LI' && 
+				!el.parentNode.parentNode.nextElementSibling && 
+				el.parentNode.parentNode.parentNode.parentNode.nodeName === 'LI' && 
+				el.parentNode.parentNode.parentNode.parentNode.nextElementSibling !== null) {
+					
+					el.removeAttribute('aria-expanded');
+					el.parentNode.removeAttribute('aria-expanded');
+			
+			}
+				
+			el.querySelectorAll('ul ul[aria-expanded]').forEach(function (el) { // Disable active grandchildren
 
+				el.removeAttribute('aria-expanded');
+
+			});
+
+		});
+		
 	});
-
+	
+	if (!window.closeDropNavClickedOutsideEnabled) {
+		
+		window.addEventListener('click', closeDropNavClickedOutside);
+		window.addEventListener('touchend', closeDropNavClickedOutside);
+		window.closeDropNavClickedOutsideEnabled = true;
+	
+	}
+	
 	el.addEventListener('keyup', function (e) {
 		
-		if (e.key === 'Enter' && e.target.querySelector('a[href]')) {
+		// Check for sibling or children to expand on control keys Left/Right/etc
+	
+		if (e.key === 'Escape') {
 			
-			e.target.querySelector('a[href]').click();
-			
-		}
-		
-	});
-	
-	if (el.querySelector('ul')) {
-
-		el.setAttribute('aria-haspopup', true);
-	
-	}
-
-/*
-	if (el.querySelector('a')) {
-
-		el.querySelector('a').setAttribute('tabindex', -1);
-	
-	}
-*/
-
-// parent blurs, child focuses, script hides child
-
-	el.addEventListener('blur', function (e) {
-	
-		// if previously focused element is this one's parent li, enable this child's parent ul
-		if (!closest(e.relatedTarget, 'nav.drop')) {
-			
-			document.querySelectorAll('nav.drop ul').forEach ( function (el) {
+			closest(e.target, 'nav.drop').querySelectorAll('ul').forEach ( function (el) {
 				
 				el.removeAttribute('aria-expanded');
 				
 			});
-			return;
+			
+			document.querySelector(':focus').blur();
 			
 		}
-
-		var current_item = e.target;
-
-		current_item.parentNode.childNodes.forEach(function (el) {
-
-			if (el === current_item && el.nodeName === 'LI' && el.querySelector('ul')) {
-	
-				el.querySelector('ul').removeAttribute('aria-expanded');
-			
-			}
-			
-		});
-
+		
 	});
 	
-});
+	el.querySelector('ul').setAttribute('role', 'menubar');
 
-window.addEventListener('click', function (e) { // Close the nav when clicking outside
+}
+
+document.querySelectorAll('nav.drop').forEach( function (el) {
 	
-	if (!closest(e.target, 'nav.drop li')) {
-
-		document.querySelectorAll('nav.drop ul').forEach ( function (el) {
-			
-			el.removeAttribute('aria-expanded');
-			
-		});
+	if (!el.querySelector('ul').getAttribute('role')) {
 		
+		initDropNav(el);
+
 	}
 	
 });
-
-window.addEventListener('touchend', function (e) { // Close the nav when clicking outside
-
-	if (!closest(e.target, 'nav.drop li')) {
-
-		document.querySelectorAll('nav.drop ul').forEach ( function (el) {
-			
-			el.removeAttribute('aria-expanded');
-			
-		});
-		
-	}
-	
-});
-
-document.querySelector('nav.drop').addEventListener('click', function (e) {
-	
-// 	console.log(e.target);
-	
-});
-
-document.querySelector('nav.drop').addEventListener('keyup', function (e) {
-	
-/*
-	console.log(e.target);
-	console.log(e.key);
-*/
-	
-	// Check for sibling or children to expand on control keys Left/Right/etc
-
-	if (e.key === 'Escape') {
-		
-		document.querySelectorAll('nav.drop ul').forEach ( function (el) {
-			
-			el.removeAttribute('aria-expanded');
-			
-		});
-		
-		document.querySelector(':focus').blur();
-		
-	}
-	
-});
-

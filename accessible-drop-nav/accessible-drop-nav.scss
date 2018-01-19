@@ -66,10 +66,7 @@ nav.drop a[href] {
 
 nav.drop li {
 	
-/* 		padding-left: 0; */
-// 	z-index: 0;
 	position: relative;
-	white-space: nowrap;
 	
 }
 
@@ -81,7 +78,8 @@ nav.drop li li {
 
 nav.drop ul ul, nav.drop li li:not(:focus) ul {
 	
-	display: none;
+	max-height: 0;
+	visibility: hidden;
 	z-index: 2;
 
 }
@@ -89,7 +87,9 @@ nav.drop ul ul, nav.drop li li:not(:focus) ul {
 nav.drop input:checked ~ ul, nav.drop input:focus ~ ul, 
 nav.drop li:focus ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
 	
-	display: block;
+	max-height: none;
+	visibility: visible;
+	opacity: 1;
 
 }
 
@@ -142,13 +142,33 @@ nav.drop li[aria-haspopup] {
 
 	html:not(.can-touch) { // Hover rules here
 		
+		nav.drop ul ul ul:not([aria-expanded]) {
+		
+			transition: 0.1s .2s;
+			opacity: 0;
+		
+		}
+
 		nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul {
 			
-			display: block;
-	// 		z-index: 1;
+			max-height: none;
+			visibility: visible;
 			background: var(--nav-bg);
+			opacity: 1;
 			
 		}
+		
+		nav.drop > ul li ul li:hover ul {
+
+			transition-delay: 0.2s;
+
+		}
+
+	}
+
+	nav.drop li {
+		
+		white-space: nowrap;
 		
 	}
 
@@ -159,7 +179,8 @@ nav.drop li[aria-haspopup] {
 	nav.drop ul ul {
 		
 		position: static;
-		width: calc(100% + 2em);
+		width: calc(100% + 1.5em);
+		padding-left: .5em;
 	
 	}
 
