@@ -25,8 +25,8 @@ function closest(el, target) { // Thanks http://gomakethings.com/ditching-jquery
 
 }
 
-
 /* –––  */
+
 function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 	
 	if (!closest(e.target, 'nav.drop li')) {
@@ -188,12 +188,8 @@ function initDropNav(el) {
 
 }
 
-document.querySelectorAll('nav.drop').forEach( function (el) {
+document.querySelectorAll('nav.drop > ul:not([role])').forEach( function (el) {
 	
-	if (!el.querySelector('ul').getAttribute('role')) {
-		
-		initDropNav(el);
-
-	}
+	initDropNav(el);
 	
 });

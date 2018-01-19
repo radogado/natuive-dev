@@ -1580,16 +1580,6 @@ function closeFoldClickOutside(e) {
 		
 	}
 	
-	if (!closest(el, 'nav.drop')) { // reset all forms, closing the drop down
-		
-		forEach('nav.drop form', function (el) {
-			
-			el.reset();
-			
-		});
-		
-	}
-	
 	// Focus on clicked slider
 	
 	if (q('.n-sldr.active')) {
@@ -1937,13 +1927,6 @@ function init() {
 	
 	});
 	
-	forEach('nav.drop ul > li', function(el, i) { // Keyboard accessibility for drop nav
-		
-// 		el.setAttribute('tabindex', 0);
-		// Also process Enter key and set aria-expanded
-		
-	});
-
 	wrapTables();
 	
 }
