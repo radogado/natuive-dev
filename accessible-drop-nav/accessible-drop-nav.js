@@ -80,20 +80,6 @@ function initDropNav(el) {
 			
 		});
 	
-		el.addEventListener('click', function (e) {
-	
-			if (e.target === document.activeElement || e.target.parentNode === document.activeElement) {
-	
-	/*
-				console.log(e.target.parentNode);
-				console.log(document.activeElement);
-				document.activeElement.blur();
-	*/
-				
-			}
-	
-		});
-	
 		el.addEventListener('keyup', function (e) {
 			
 			if (e.key === 'Enter' && e.target.querySelector('a[href]')) {
