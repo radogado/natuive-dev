@@ -55,6 +55,12 @@ function initDropNav(el) {
 		
 		el.setAttribute('tabindex', 0);
 	
+		if (el.querySelector('a')) { // Avoid double tabbing
+			
+			el.querySelector('a').setAttribute('tabindex', -1);
+
+		}
+
 		el.addEventListener('focus', function (e) {
 	
 			var el = e.target;

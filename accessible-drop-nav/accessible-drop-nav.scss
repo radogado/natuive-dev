@@ -80,8 +80,8 @@ nav.drop li li {
 nav.drop ul ul, nav.drop li li:not(:focus) ul {
 	
 	max-height: 0;
-	visibility: hidden;
 	z-index: 2;
+	overflow: hidden;
 
 }
 
@@ -89,7 +89,7 @@ nav.drop input:checked ~ ul, nav.drop input:focus ~ ul,
 nav.drop li:focus ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
 	
 	max-height: none;
-	visibility: visible;
+	overflow: visible;
 	opacity: 1;
 
 }
@@ -159,7 +159,7 @@ nav.drop li[aria-haspopup] {
 		nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul {
 			
 			max-height: none;
-			visibility: visible;
+			overflow: visible;
 			opacity: 1;
 			
 		}
