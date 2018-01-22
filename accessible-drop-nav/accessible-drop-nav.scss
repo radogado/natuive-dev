@@ -7,6 +7,7 @@ nav.drop {
 nav.drop ul {
 	
 	padding: 0;
+	margin: 0;
 	min-height: 0;
 
 }
@@ -16,7 +17,6 @@ nav.drop ul ul {
 	padding: 0;
 	position: absolute;
 	left: 0;
-	top: 3em;
 	background-color: var(--nav-bg);
 
 }
@@ -95,6 +95,7 @@ nav.drop li li {
 
 nav.drop ul ul:not([aria-expanded]) {
 	
+	min-height: 0;
 	max-height: 0;
 	z-index: 2;
 	overflow: hidden;
