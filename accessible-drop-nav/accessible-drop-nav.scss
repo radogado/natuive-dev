@@ -67,8 +67,13 @@ nav.drop a[href] {
 
 nav.drop li:not([aria-haspopup]) a {
 	
-	z-index: 1;
     margin-right: 1em;	
+	
+}
+
+nav.drop li:not([aria-haspopup]) a {
+	
+	z-index: 1;
 	
 }
 
@@ -98,7 +103,12 @@ nav.drop a:focus ~ ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-exp
 	max-height: none;
 	overflow: visible;
 	opacity: 1;
-	z-index: 1;
+
+}
+
+nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
+
+	z-index: 1; // Problem with CSS-only input method
 
 }
 
