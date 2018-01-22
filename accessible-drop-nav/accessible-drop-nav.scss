@@ -61,7 +61,7 @@ nav.drop li > a {
 
 }
 
-nav.drop a:focus, nav.drop input:focus {
+nav.drop a:focus, nav.drop li > :focus {
 
 	outline-offset: -7px;
 
@@ -101,7 +101,7 @@ nav.drop ul ul:not([aria-expanded]) {
 
 }
 
-nav.drop input:checked ~ ul, nav.drop input:focus ~ ul, 
+nav.drop ul li > :checked ~ ul, nav.drop :focus ~ ul, 
 nav.drop a:focus ~ ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
 	
 	max-height: none;
@@ -111,7 +111,7 @@ nav.drop a:focus ~ ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-exp
 
 }
 
-nav.drop input {
+nav.drop li > input {
 	
 	-webkit-appearance: none;
 	-moz-appearance: none;
