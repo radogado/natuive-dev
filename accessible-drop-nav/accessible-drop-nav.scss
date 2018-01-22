@@ -48,7 +48,7 @@ nav.drop li {
 	
 }
 
-nav.drop li:not([tabindex]) {
+nav.drop li[aria-haspopup]:not([tabindex]) {
 
 	padding-right: 2em;
 
@@ -63,7 +63,7 @@ nav.drop li > a {
 
 nav.drop a:focus {
 
-	outline-offset: -6px;
+	outline-offset: -7px;
 
 }
 

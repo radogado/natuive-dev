@@ -7,7 +7,8 @@
 // √ To do: hover
 // √ To do: z-index when sub nav overlaps top-level li
 // √ To do: arrows without PNG images
-// To do: when focusin on a top-level item, hide its grandchildren
+// √ To do: when focusin on a top-level item, hide its grandchildren
+// Note: Safari needs alt+Tab in order to cycle through all the nav items
 
 function closest(el, target) { // Thanks http://gomakethings.com/ditching-jquery/ – Accepts either a selector string or an actual element
 
@@ -29,9 +30,9 @@ function closest(el, target) { // Thanks http://gomakethings.com/ditching-jquery
 
 function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 	
-	if (!closest(e.target, 'nav.drop li')) {
+	if (!closest(e.target, 'nav li')) {
 
-		document.querySelectorAll('nav.drop ul').forEach ( function (el) {
+		document.querySelectorAll('nav ul').forEach ( function (el) {
 			
 			el.removeAttribute('aria-expanded');
 			
@@ -121,12 +122,11 @@ function initDropNav(el) {
 	
 		anchor.addEventListener('blur', function (e) {
 
-			var this_nav = closest(e.target, 'nav.drop');
-			
+			var this_nav = closest(e.target, 'nav');
+			e.relatedTarget = document.getElementById('i');
 			if (!closest(e.relatedTarget, this_nav)) { // if e.relatedTarget is not a child of this_nav, then the next focused item is elsewhere
-	
-				this_nav.querySelectorAll('ul').forEach ( function (el) {
-					
+				
+					this_nav.querySelectorAll('ul').forEach ( function (el) {
 					el.removeAttribute('aria-expanded');
 					
 				});
@@ -148,7 +148,6 @@ function initDropNav(el) {
 				el.parentNode.parentNode.nodeName === 'LI' && // of third-level nav
 				!el.parentNode.parentNode.nextElementSibling) {
 					
-					console.log(el.parentNode.parentNode.parentNode.parentNode);
 					el.parentNode.parentNode.parentNode.removeAttribute('aria-expanded');
 			
 			}
@@ -171,7 +170,7 @@ function initDropNav(el) {
 	
 		if (e.key === 'Escape') {
 			
-			closest(e.target, 'nav.drop').querySelectorAll('ul').forEach ( function (el) {
+			closest(e.target, 'nav').querySelectorAll('ul').forEach ( function (el) {
 				
 				el.removeAttribute('aria-expanded');
 				
@@ -187,7 +186,7 @@ function initDropNav(el) {
 
 }
 
-document.querySelectorAll('nav.drop > ul:not([role])').forEach( function (el) {
+document.querySelectorAll('nav > ul:not([role])').forEach( function (el) {
 	
 	initDropNav(el);
 	
