@@ -61,7 +61,7 @@ nav.drop li > a {
 
 }
 
-nav.drop a:focus {
+nav.drop a:focus, nav.drop input:focus {
 
 	outline-offset: -7px;
 
@@ -72,6 +72,13 @@ nav.drop a[href] {
 // 	z-index: 1;
 	position: relative;
 
+}
+
+nav.drop li:not([aria-haspopup]) a {
+	
+	z-index: 1;
+    margin-right: 1em;	
+	
 }
 
 nav.drop li {
@@ -166,7 +173,7 @@ nav.drop li[aria-haspopup] {
 			
 		}
 
-		nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul {
+		nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul, nav.drop ul ul :checked ~ ul:not([aria-expanded]) {
 			
 			max-height: none;
 			overflow: visible;
