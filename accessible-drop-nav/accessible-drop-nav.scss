@@ -4,12 +4,14 @@ nav.drop {
 
 }
 
+/*
 nav.drop :focus {
 	
 	outline: solid 2px rgba(0,0,0,.2);
 	outline-offset: -.3em;
 
 }
+*/
 
 nav.drop ul {
 	
@@ -42,6 +44,7 @@ nav.drop li {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	background: var(--nav-bg);
 	
 }
 
@@ -58,9 +61,15 @@ nav.drop li > a {
 
 }
 
+nav.drop a:focus {
+
+	outline-offset: -6px;
+
+}
+
 nav.drop a[href] {
 	
-	z-index: 1;
+// 	z-index: 1;
 	position: relative;
 
 }
@@ -77,7 +86,7 @@ nav.drop li li {
 
 }
 
-nav.drop ul ul, nav.drop li li:not(:focus) ul {
+nav.drop ul ul:not([aria-expanded]) {
 	
 	max-height: 0;
 	z-index: 2;
@@ -86,11 +95,12 @@ nav.drop ul ul, nav.drop li li:not(:focus) ul {
 }
 
 nav.drop input:checked ~ ul, nav.drop input:focus ~ ul, 
-nav.drop li:focus ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
+nav.drop a:focus ~ ul, nav.drop ul ul[aria-expanded], nav.drop li li ul[aria-expanded], nav.drop li li:not(:focus) :checked ~ ul {
 	
 	max-height: none;
 	overflow: visible;
 	opacity: 1;
+	z-index: 1;
 
 }
 
