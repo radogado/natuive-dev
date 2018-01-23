@@ -78,7 +78,11 @@ function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 			
 		});
 		
-		document.querySelector('nav :focus').blur();
+		if (document.querySelector(':focus')) {
+
+			document.querySelector(':focus').blur();
+		
+		}
 		
 	}
 	
@@ -100,7 +104,7 @@ function initDropNav(el) {
 		anchor.setAttribute('tabindex', 0);
 
 		anchor.addEventListener('focus', function (e) {
-	
+			console.log(e.target);
 			var el = e.target;
 	
 			el.parentNode.parentNode.setAttribute('aria-expanded', true);
