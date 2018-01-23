@@ -78,9 +78,9 @@ function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 			
 		});
 		
-		if (document.querySelector(':focus')) {
+		if (document.querySelector('nav :focus')) {
 
-			document.querySelector(':focus').blur();
+			document.querySelector('nav :focus').blur();
 		
 		}
 		
