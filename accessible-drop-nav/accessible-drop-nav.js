@@ -69,7 +69,7 @@ function closest(el, target) { // Thanks http://gomakethings.com/ditching-jquery
 /* –––  */
 
 function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
-	
+
 	if (!closest(e.target, 'nav li')) {
 
 		document.querySelectorAll('nav ul').forEach ( function (el) {
@@ -77,6 +77,8 @@ function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 			el.removeAttribute('aria-expanded');
 			
 		});
+		
+		document.querySelector('nav :focus').blur();
 		
 	}
 	
@@ -149,6 +151,16 @@ function initDropNav(el) {
 	*/
 	
 		el.addEventListener('click', function (e) {
+			
+			if (e.target.querySelector('a')) {
+
+				e.target.querySelector('a').focus();
+			
+			}
+		
+		});
+
+		el.addEventListener('touchend', function (e) {
 			
 			if (e.target.querySelector('a')) {
 
