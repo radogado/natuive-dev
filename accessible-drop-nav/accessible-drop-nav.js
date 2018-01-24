@@ -88,7 +88,7 @@ function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 	
 }
 
-function initDropNav(el) {
+function initNav(el) {
 
 	// Delete all trigger inputs, add tabindex=0 to each li
 	
@@ -98,10 +98,23 @@ function initDropNav(el) {
 		
 	});
 	
+	el.setAttribute('role', 'menubar');
+
+	el.querySelectorAll('li').forEach(function (el) {
+		
+		el.querySelector('a').setAttribute('tabindex', 0);
+
+	});
+
+	if (!closest(el, 'nav.drop')) { // The rest is for drop nav only
+		
+		return;
+
+	}
+
 	el.querySelectorAll('li').forEach(function (el) {
 		
 		var anchor = el.querySelector('a');
-		anchor.setAttribute('tabindex', 0);
 
 		anchor.addEventListener('focus', function (e) {
 
@@ -136,8 +149,6 @@ function initDropNav(el) {
 	
 		el.addEventListener('touchend', function (e) {
 
-			console.log('touched');
-			console.log(e.target);
 			if (e.target.querySelector('a')) {
 
 				e.target.querySelector('a').focus();
@@ -161,7 +172,6 @@ function initDropNav(el) {
 				return;
 				
 			}
-	
 			// Close neighboring parent nav's sub navs
 			var el = e.target;
 			var target_parent = closest(el, '[aria-haspopup]');
@@ -171,7 +181,14 @@ function initDropNav(el) {
 
 			});
 
-			var el = e.target.parentNode;
+			target_parent = closest(target_parent.parentNode, '[aria-haspopup]');
+			target_parent.querySelectorAll('ul[aria-expanded]').forEach(function (el) { // Disable active grandchildren
+
+				el.removeAttribute('aria-expanded');
+
+			});
+
+			el = e.target.parentNode;
 			if (!el.nextElementSibling && // last item
 				el.parentNode.parentNode.nodeName === 'LI' && // of third-level nav
 				!el.parentNode.parentNode.nextElementSibling) {
@@ -180,15 +197,12 @@ function initDropNav(el) {
 			
 			}
 			
-			return false;
-
 		});
 		
 	});
-	
+
 	if (!window.closeDropNavClickedOutsideEnabled) {
 		
-		window.addEventListener('click', closeDropNavClickedOutside);
 		window.addEventListener('touchend', closeDropNavClickedOutside);
 		window.closeDropNavClickedOutsideEnabled = true;
 	
@@ -212,12 +226,10 @@ function initDropNav(el) {
 		
 	});
 	
-	closest(el, 'nav > ul').setAttribute('role', 'menubar');
-
 }
 
 document.querySelectorAll('nav > ul:not([role])').forEach( function (el) {
 	
-	initDropNav(el);
+	initNav(el);
 	
 });
