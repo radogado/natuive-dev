@@ -160,8 +160,17 @@ function initNav(el) {
 	// parent blurs, child focuses, script hides child
 	
 		anchor.addEventListener('blur', function (e) {
-
+			if (!closest(document.activeElement, 'nav')) {
+				
+				return false;
+				
+			}
+		console.log('blur');
+		console.log(e.target);
+		console.log(document.activeElement);
 			var this_nav = closest(e.target, 'nav');
+			
+console.log(this_nav);			
 			if (!closest(e.relatedTarget, this_nav)) { // if e.relatedTarget is not a child of this_nav, then the next focused item is elsewhere
 				
 				this_nav.querySelectorAll('ul').forEach ( function (el) {
