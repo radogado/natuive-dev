@@ -104,7 +104,7 @@ function initDropNav(el) {
 		anchor.setAttribute('tabindex', 0);
 
 		anchor.addEventListener('focus', function (e) {
-			console.log(e.target);
+
 			var el = e.target;
 	
 			el.parentNode.parentNode.setAttribute('aria-expanded', true);
@@ -128,44 +128,16 @@ function initDropNav(el) {
 			
 		});
 	
-		el.addEventListener('keyup', function (e) {
-			
-/*
-			if (e.key === 'Enter' && e.target.querySelector('a[href]')) {
-				
-				e.target.querySelector('a[href]').click();
-				
-			}
-*/
-			
-		});
-		
 		if (el.querySelector('ul')) {
 	
 			el.setAttribute('aria-haspopup', true);
 		
 		}
 	
-	/*
-		if (el.querySelector('a')) {
-	
-			el.querySelector('a').setAttribute('tabindex', -1);
-		
-		}
-	*/
-	
-		el.addEventListener('click', function (e) {
-			
-			if (e.target.querySelector('a')) {
-
-				e.target.querySelector('a').focus();
-			
-			}
-		
-		});
-
 		el.addEventListener('touchend', function (e) {
-			
+
+			console.log('touched');
+			console.log(e.target);
 			if (e.target.querySelector('a')) {
 
 				e.target.querySelector('a').focus();
@@ -179,10 +151,10 @@ function initDropNav(el) {
 		anchor.addEventListener('blur', function (e) {
 
 			var this_nav = closest(e.target, 'nav');
-			e.relatedTarget = document.getElementById('i');
 			if (!closest(e.relatedTarget, this_nav)) { // if e.relatedTarget is not a child of this_nav, then the next focused item is elsewhere
 				
-					this_nav.querySelectorAll('ul').forEach ( function (el) {
+				this_nav.querySelectorAll('ul').forEach ( function (el) {
+
 					el.removeAttribute('aria-expanded');
 					
 				});
@@ -207,6 +179,8 @@ function initDropNav(el) {
 					el.parentNode.parentNode.parentNode.removeAttribute('aria-expanded');
 			
 			}
+			
+			return false;
 
 		});
 		
