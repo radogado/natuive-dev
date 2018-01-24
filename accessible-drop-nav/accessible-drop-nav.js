@@ -122,11 +122,13 @@ function initNav(el) {
 	
 			// If a main item is focused, hide all sub items from the other main items. To do: fix error when there's no open sub nav
 
+/*
 			if (el.parentNode.parentNode.getAttribute('role')) {
 				
 				closest(el, 'nav').querySelector('ul[aria-expanded]').removeAttribute('aria-expanded');
 				
 			}
+*/
 
 			el.parentNode.parentNode.setAttribute('aria-expanded', true);
 			if (el.parentNode.querySelector('ul')) {
