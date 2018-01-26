@@ -120,15 +120,21 @@ function initNav(el) {
 
 			var el = e.target;
 	
-			// If a main item is focused, hide all sub items from the other main items. To do: fix error when there's no open sub nav
+			// Close focused third level child when focus moves to another top-level item
 
-/*
-			if (el.parentNode.parentNode.getAttribute('role')) {
+			closest(el, 'nav > ul').childNodes.forEach( function (a) {
 				
-				closest(el, 'nav').querySelector('ul[aria-expanded]').removeAttribute('aria-expanded');
+				if (a.nodeName === 'LI' && a !== el.parentNode) {
 				
-			}
-*/
+					a.parentNode.querySelectorAll('[aria-expanded]').forEach( function (el) {
+						
+						el.removeAttribute('aria-expanded');
+						
+					});
+				
+				}
+				
+			});
 
 			el.parentNode.parentNode.setAttribute('aria-expanded', true);
 			if (el.parentNode.querySelector('ul')) {
@@ -184,7 +190,7 @@ function initNav(el) {
 				return;
 				
 			}
-			// Close neighboring parent nav's sub navs
+			// Close neighboring parent nav's sub navs.
 			var el = e.target;
 			var target_parent = closest(el, '[aria-haspopup]');
 			target_parent.querySelectorAll('ul[aria-expanded]').forEach(function (el) { // Disable active grandchildren
