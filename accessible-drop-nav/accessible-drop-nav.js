@@ -89,7 +89,7 @@ function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 }
 
 function initNav(el) {
-
+	
 	// Delete all trigger inputs, add tabindex=0 to each li
 	
 	el.querySelectorAll('input').forEach(function (el) {
@@ -121,12 +121,14 @@ function initNav(el) {
 			var el = e.target;
 	
 			// Close focused third level child when focus moves to another top-level item
+			
+			el = closest(el, 'nav > ul > li');
+			
+			el.parentNode.childNodes.forEach( function (a) {
 
-			closest(el, 'nav > ul').childNodes.forEach( function (a) {
+				if (a.nodeName === 'LI' && a !== el) {
 				
-				if (a.nodeName === 'LI' && a !== el.parentNode) {
-				
-					a.parentNode.querySelectorAll('[aria-expanded]').forEach( function (el) {
+					a.querySelectorAll('[aria-expanded]').forEach( function (el) {
 						
 						el.removeAttribute('aria-expanded');
 						
@@ -135,6 +137,8 @@ function initNav(el) {
 				}
 				
 			});
+			
+			el = e.target;
 
 			el.parentNode.parentNode.setAttribute('aria-expanded', true);
 			if (el.parentNode.querySelector('ul')) {

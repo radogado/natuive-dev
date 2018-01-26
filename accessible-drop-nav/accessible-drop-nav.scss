@@ -177,6 +177,15 @@ nav.drop li[aria-haspopup] {
 			
 		}
 		
+		nav.drop > ul > li:hover > input:not(:checked) ~ ul, nav.drop > ul li ul li:hover input:not(:checked) ~ ul {
+			
+			min-height: 0;
+			max-height: 0;
+			overflow: hidden;
+			z-index: 1;
+
+		}
+		
 		nav.drop > ul li ul li:hover ul {
 
 			transition-delay: 0.2s;
