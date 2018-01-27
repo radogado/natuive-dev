@@ -112,17 +112,59 @@ function initNav(el) {
 
 	}
 
+	if (!window.closeDropNavClickedOutsideEnabled) {
+		
+		window.addEventListener('touchend', closeDropNavClickedOutside);
+		window.closeDropNavClickedOutsideEnabled = true;
+	
+	}
+	
+	el.addEventListener('keyup', function (e) {
+		
+		// Check for sibling or children to expand on control keys Left/Right/etc
+	
+		if (e.key === 'Escape') {
+			
+			closest(e.target, 'nav').querySelectorAll('ul').forEach ( function (el) {
+				
+				el.removeAttribute('aria-expanded');
+				
+			});
+			
+			document.querySelector(':focus').blur();
+			
+		}
+		
+	});
+	
 	el.querySelectorAll('li').forEach(function (el) {
 		
+		if (el.querySelector('ul')) {
+	
+			el.setAttribute('aria-haspopup', true);
+		
+		}
+	
+		el.addEventListener('touchend', function (e) {
+
+			if (e.target.querySelector('a')) {
+
+				e.target.querySelector('a').focus();
+			
+			}
+		
+		});
+
 		var anchor = el.querySelector('a');
 
 		anchor.addEventListener('focus', function (e) {
-
-			var el = e.target;
-	
-			// Close focused third level child when focus moves to another top-level item
+console.log('focus');
+console.log(e);
+console.log('\n');
+e.stopPropagation();
+    e.preventDefault();			// Close focused third level child when focus moves to another top-level item
 			
-			el = closest(el, 'nav > ul > li');
+			var el = closest(e.target, 'nav > ul > li');
 			
 			el.parentNode.childNodes.forEach( function (a) {
 
@@ -159,31 +201,15 @@ function initNav(el) {
 				
 			});
 			
-			
-			
 		});
-	
-		if (el.querySelector('ul')) {
-	
-			el.setAttribute('aria-haspopup', true);
-		
-		}
-	
-		el.addEventListener('touchend', function (e) {
-
-			if (e.target.querySelector('a')) {
-
-				e.target.querySelector('a').focus();
-			
-			}
-		
-		});
-
-	// parent blurs, child focuses, script hides child
 	
 		anchor.addEventListener('blur', function (e) {
 
+console.log('blur');
+console.log(e);
+console.log('\n');
 			var this_nav = closest(e.target, 'nav');
+			
 			if (!closest(e.relatedTarget, this_nav)) { // if e.relatedTarget is not a child of this_nav, then the next focused item is elsewhere
 				
 				this_nav.querySelectorAll('ul').forEach ( function (el) {
@@ -216,31 +242,6 @@ function initNav(el) {
 		
 	});
 
-	if (!window.closeDropNavClickedOutsideEnabled) {
-		
-		window.addEventListener('touchend', closeDropNavClickedOutside);
-		window.closeDropNavClickedOutsideEnabled = true;
-	
-	}
-	
-	el.addEventListener('keyup', function (e) {
-		
-		// Check for sibling or children to expand on control keys Left/Right/etc
-	
-		if (e.key === 'Escape') {
-			
-			closest(e.target, 'nav').querySelectorAll('ul').forEach ( function (el) {
-				
-				el.removeAttribute('aria-expanded');
-				
-			});
-			
-			document.querySelector(':focus').blur();
-			
-		}
-		
-	});
-	
 }
 
 document.querySelectorAll('nav > ul:not([role])').forEach( function (el) {
