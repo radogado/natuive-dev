@@ -88,6 +88,83 @@ function closeDropNavClickedOutside(e) { // Close the nav when clicking outside
 	
 }
 
+function dropNavBlur(e) {
+
+	var this_nav = closest(e.target, 'nav');
+	
+	if (!closest(e.relatedTarget, this_nav)) { // if e.relatedTarget is not a child of this_nav, then the next focused item is elsewhere
+		
+		this_nav.querySelectorAll('ul').forEach ( function (el) {
+
+			el.removeAttribute('aria-expanded');
+			
+		});
+		return;
+		
+	}
+	// Close neighboring parent nav's sub navs.
+	var el = e.target;
+	var target_parent = closest(el, '[aria-haspopup]');
+	target_parent.querySelectorAll('ul[aria-expanded]').forEach(function (el) { // Disable active grandchildren
+
+		el.removeAttribute('aria-expanded');
+
+	});
+
+	el = e.target.parentNode;
+	if (!el.nextElementSibling && // last item
+		el.parentNode.parentNode.nodeName === 'LI' && // of third-level nav
+		!el.parentNode.parentNode.nextElementSibling) {
+			
+			el.parentNode.parentNode.parentNode.removeAttribute('aria-expanded');
+	
+	}
+	
+}
+		
+function dropNavFocus(e) {
+
+	// Close focused third level child when focus moves to another top-level item
+	
+	var el = closest(e.target, 'nav > ul > li');
+	
+	el.parentNode.childNodes.forEach( function (a) {
+
+		if (a.nodeName === 'LI' && a !== el) {
+		
+			a.querySelectorAll('[aria-expanded]').forEach( function (el) {
+				
+				el.removeAttribute('aria-expanded');
+				
+			});
+		
+		}
+		
+	});
+	
+	el = e.target;
+
+	el.parentNode.parentNode.setAttribute('aria-expanded', true);
+	if (el.parentNode.querySelector('ul')) {
+
+		el.parentNode.querySelector('ul').setAttribute('aria-expanded', 'true');
+
+	}
+	
+	var current_item = e.target.parentNode;
+
+	current_item.parentNode.parentNode.childNodes.forEach(function (el) {
+
+		if (el !== current_item && el.nodeName === 'LI' && el.querySelector('ul')) {
+
+			el.querySelector('ul').removeAttribute('aria-expanded');
+		
+		}
+		
+	});
+	
+}
+
 function initNav(el) {
 	
 	// Delete all trigger inputs, add tabindex=0 to each li
@@ -147,6 +224,8 @@ function initNav(el) {
 	
 		el.addEventListener('touchend', function (e) {
 
+			e.preventDefault();
+
 			if (e.target.querySelector('a')) {
 
 				e.target.querySelector('a').focus();
@@ -157,88 +236,9 @@ function initNav(el) {
 
 		var anchor = el.querySelector('a');
 
-		anchor.addEventListener('focus', function (e) {
-console.log('focus');
-console.log(e);
-console.log('\n');
-e.stopPropagation();
-    e.preventDefault();			// Close focused third level child when focus moves to another top-level item
-			
-			var el = closest(e.target, 'nav > ul > li');
-			
-			el.parentNode.childNodes.forEach( function (a) {
-
-				if (a.nodeName === 'LI' && a !== el) {
-				
-					a.querySelectorAll('[aria-expanded]').forEach( function (el) {
-						
-						el.removeAttribute('aria-expanded');
-						
-					});
-				
-				}
-				
-			});
-			
-			el = e.target;
-
-			el.parentNode.parentNode.setAttribute('aria-expanded', true);
-			if (el.parentNode.querySelector('ul')) {
+		anchor.addEventListener('focus', dropNavFocus);
 	
-				el.parentNode.querySelector('ul').setAttribute('aria-expanded', 'true');
-	
-			}
-			
-			var current_item = e.target.parentNode;
-	
-			current_item.parentNode.parentNode.childNodes.forEach(function (el) {
-	
-				if (el !== current_item && el.nodeName === 'LI' && el.querySelector('ul')) {
-	
-					el.querySelector('ul').removeAttribute('aria-expanded');
-				
-				}
-				
-			});
-			
-		});
-	
-		anchor.addEventListener('blur', function (e) {
-
-console.log('blur');
-console.log(e);
-console.log('\n');
-			var this_nav = closest(e.target, 'nav');
-			
-			if (!closest(e.relatedTarget, this_nav)) { // if e.relatedTarget is not a child of this_nav, then the next focused item is elsewhere
-				
-				this_nav.querySelectorAll('ul').forEach ( function (el) {
-
-					el.removeAttribute('aria-expanded');
-					
-				});
-				return;
-				
-			}
-			// Close neighboring parent nav's sub navs.
-			var el = e.target;
-			var target_parent = closest(el, '[aria-haspopup]');
-			target_parent.querySelectorAll('ul[aria-expanded]').forEach(function (el) { // Disable active grandchildren
-
-				el.removeAttribute('aria-expanded');
-
-			});
-
-			el = e.target.parentNode;
-			if (!el.nextElementSibling && // last item
-				el.parentNode.parentNode.nodeName === 'LI' && // of third-level nav
-				!el.parentNode.parentNode.nextElementSibling) {
-					
-					el.parentNode.parentNode.parentNode.removeAttribute('aria-expanded');
-			
-			}
-			
-		});
+		anchor.addEventListener('blur', dropNavBlur);
 		
 	});
 
