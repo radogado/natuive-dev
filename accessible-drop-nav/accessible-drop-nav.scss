@@ -146,7 +146,7 @@ nav.drop li > input, nav.drop li[aria-haspopup] {
 
 nav.drop li > input {
 	
-	background-position-y: 2em;
+	background-position-y: 50%;
 	
 }
 
@@ -236,6 +236,12 @@ nav.drop li[aria-haspopup] {
 		
 		margin: 0;	
 
+	}
+
+	nav.drop li > input, nav.drop li[aria-haspopup] {
+		
+		background-position-y: 1.25em;
+	
 	}
 
 }
