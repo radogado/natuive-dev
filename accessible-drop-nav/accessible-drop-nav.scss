@@ -61,6 +61,9 @@ nav.drop li > a {
 nav.drop a:focus, nav.drop li > :focus {
 
 	outline-offset: -7px;
+	outline-offset: -1px;
+	outline-style: dashed;
+	outline-width: 1px;
 
 }
 
