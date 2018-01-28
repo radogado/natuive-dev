@@ -242,7 +242,13 @@ function initNav(el) {
 		}
 	
 		el.addEventListener('touchend', function (e) {
-
+			
+			if (window.dragging) {
+				
+				return;
+				
+			}
+			
 			e.preventDefault();
 			e.stopPropagation();
 			
@@ -271,6 +277,20 @@ function initNav(el) {
 		anchor.addEventListener('focus', dropNavFocus);
 	
 		anchor.addEventListener('blur', dropNavBlur);
+		
+	});
+
+	window.dragging = false;
+
+	window.addEventListener('touchstart', function (e) {
+		
+		window.dragging = false;
+		
+	});
+
+	window.addEventListener('touchmove', function (e) {
+		
+		window.dragging = true;
 		
 	});
 
