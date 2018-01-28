@@ -10,6 +10,10 @@
 // √ To do: when focusin on a top-level item, hide its grandchildren
 // Note: Safari needs alt+Tab in order to cycle through all the nav items
 
+if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector;
+}
+
 function closest(el, target) { // Thanks http://gomakethings.com/ditching-jquery/ – Accepts either a selector string or an actual element
 
     for ( ; el && el !== document; el = el.parentNode ) {
