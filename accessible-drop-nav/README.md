@@ -11,7 +11,7 @@ Features
 - Mouse hover support on hybrid devices
 - Accessible by the Tab key
 - Accessible without JavaScript
-- Using WCAG a11y attributes aria-expanded and aria-haspopup
+- Using WAI-ARIA a11y attributes aria-expanded and aria-haspopup
 - Mobile version with touch control
 - Delayed hover effect for diagonally accessible third-level nav
 - Supporting nav items with or without a link
