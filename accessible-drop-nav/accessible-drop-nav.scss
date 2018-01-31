@@ -58,9 +58,8 @@ nav.drop li > a {
 
 }
 
-nav.drop a:focus, nav.drop li > :focus {
+:focus { // Because default focus indication is overlapped in Chrome for Windows
 
-	outline-offset: -7px;
 	outline-offset: -1px;
 	outline-style: dashed;
 	outline-width: 1px;

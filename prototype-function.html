@@ -1,0 +1,32 @@
+<script>
+	
+  function q(selector) {
+
+		return document.querySelector(selector);
+
+  };
+	
+  Element.prototype.q = function(selector) {
+
+	return this.querySelector(selector);
+
+  };
+  
+  function qa(selector) {
+
+		return document.querySelectorAll(selector);
+
+  };
+	
+  Element.prototype.qa = function(selector) {
+
+	return this.querySelectorAll(selector);
+
+  };
+
+</script>
+
+<p>P
+	
+	<b>B</b>
+</p>
