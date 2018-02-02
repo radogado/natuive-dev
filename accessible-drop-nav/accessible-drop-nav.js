@@ -247,8 +247,10 @@ function initNav(el) {
 		}
 	
 		el.addEventListener('touchend', function (e) {
-			
-			if (window.dragging) {
+
+			var el = e.target;
+
+			if (window.dragging || el.getAttribute('href')) {
 				
 				return;
 				
@@ -256,8 +258,6 @@ function initNav(el) {
 			
 			e.preventDefault();
 			e.stopPropagation();
-			
-			var el = e.target;
 			
 			if (el.nodeName === 'LI') {
 				
