@@ -1,0 +1,96 @@
+<p class="a">Paragraph</p>
+
+<script>
+/**
+ * Closure Compiler directive to avoid the warning about 'this' usage.
+ * @constructor
+ */
+ 
+function q(selector) {
+// Accepts either an element or a text selector
+// Returns false if query doesn't exist
+
+	var el = typeof selector === 'string' ? document.querySelectorAll(selector) : selector; // To do: make a separate version for multiple elements, because a single element query now queries all of the matching elements and is slower.
+
+	if (el.length === 0) {
+		
+		return false;
+	
+	}
+
+	// Avoid clobbering the window scope: 
+	// return a new q object if we're in the wrong scope
+	if (window === this) {
+		return new q(selector);
+	}
+
+	// We're in the correct object scope:
+	// Init our element object and return the object
+	this.el = el;
+	return this;
+
+}
+
+/*	q Prototype Functions
+============================*/
+
+q.prototype = {
+
+	hasClass: function (className) {
+
+		return this.el[0].classList.contains(className);
+		
+	},
+	addClass: function (className) {
+
+		this.el[0].classList.add(className);
+		
+	},
+	removeClass: function (className) {
+
+		this.el[0].classList.remove(className);
+		
+	},
+	toggleClass: function (className) {
+
+	    if (this.el[0].hasClass(className)) {
+	
+	        this.el[0].removeClass(className);
+	
+	    } else {
+	
+	        this.el[0].addClass(className);
+	
+	    }
+		
+	},
+	toggleAttribute: function (attribute) {
+
+	    if (this.el[0].getAttribute(attribute)) {
+	
+	        this.el[0].removeAttribute(attribute);
+	
+	    } else {
+	
+	        this.el[0].setAttribute(attribute, true);
+	
+	    }
+
+	},
+	forEach: function (fn) { // Because IE11 doesn't support el.forEach(). Accepts both an array and a selector
+		
+		if (this.el.length > 0) {
+	
+		    for (var i = 0; i < this.el.length; i++) {
+		
+		        fn(this.el[i], i);
+		
+		    }
+	    
+	    }
+	
+	}
+
+};
+
+</script>
