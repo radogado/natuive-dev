@@ -32,13 +32,24 @@ function query(selector, context) { // Fast query which detects simple selectors
 function q(selector) {
 // Accepts either an element or a text selector
 // Returns false if query doesn't exist
-// Not working with element
-	var el = typeof selector === 'string' ? query(selector) : selector; // To do: make a separate version for multiple elements, because a single element query now queries all of the matching elements and is slower.
 
+// To do: make a separate version for multiple elements, because a single element query now queries all of the matching elements and is slower.
+	
+	if (typeof selector === 'string') {
+		
+		el = query(selector);
+
+	} else {
+		
+		el = new Array;
+		el[0] = selector;
+
+	}
+	
 	if (el.length === 0) {
 		
 		return false;
-	
+
 	}
 
 	// Avoid clobbering the window scope: 
