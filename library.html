@@ -5,12 +5,35 @@
  * Closure Compiler directive to avoid the warning about 'this' usage.
  * @constructor
  */
+
+function query(selector, context) { // Fast query which detects simple selectors and avoids obsolete DOM traversal. Thanks Ryan Morr http://ryanmorr.com/abstract-away-the-performance-faults-of-queryselectorall/
+    context = context || document;
+    // Redirect simple selectors to the more performant function
+    if (/^(#?[\w-]+|\.[\w-.]+)$/.test(selector)) {
+        switch (selector.charAt(0)) {
+            case '#':
+                // Handle ID-based selectors
+                return [context.getElementById(selector.substr(1))];
+            case '.':
+                // Handle class-based selectors
+                // Query by multiple classes by converting the selector 
+                // string into single spaced class names
+                var classes = selector.substr(1).replace(/\./g, ' ');
+                return [].slice.call(context.getElementsByClassName(classes));
+            default:
+                // Handle tag-based selectors
+                return [].slice.call(context.getElementsByTagName(selector));
+        }
+    }
+    // Default to `querySelectorAll`
+    return [].slice.call(context.querySelectorAll(selector));
+}
  
 function q(selector) {
 // Accepts either an element or a text selector
 // Returns false if query doesn't exist
-
-	var el = typeof selector === 'string' ? document.querySelectorAll(selector) : selector; // To do: make a separate version for multiple elements, because a single element query now queries all of the matching elements and is slower.
+// Not working with element
+	var el = typeof selector === 'string' ? query(selector) : selector; // To do: make a separate version for multiple elements, because a single element query now queries all of the matching elements and is slower.
 
 	if (el.length === 0) {
 		
