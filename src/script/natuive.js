@@ -1,8 +1,6 @@
 /* natUIve by rado.bg */
 /* DOM functions via http://youmightnotneedjquery.com */
 
-var aria_expanded = 'aria-expanded';
-
 function wrapTables() {
 	
 	forEach('table', function(el) {
@@ -1457,21 +1455,21 @@ function toggleAccordion(e) {
 	
 	if (hasClass(el, 'horizontal')) {
 		
-		toggleAttribute(el, aria_expanded);
+		toggleAttribute(el, 'aria-expanded');
 		
 	} else {
 	
-		if (el.hasAttribute(aria_expanded)) {
+		if (el.hasAttribute('aria-expanded')) {
 	
 			animate(content, '0% { max-height: ' + content.scrollHeight + 'px; } 100% { max-height: ' + content_height + '; }', .2, function () {
 				
-				toggleAttribute(el, aria_expanded);
+				toggleAttribute(el, 'aria-expanded');
 				
 			});
 			
 		} else {
 			
-			toggleAttribute(el, aria_expanded);
+			toggleAttribute(el, 'aria-expanded');
 			animate(content, '0% { max-height: ' + content_height + '; } 100% { max-height: ' + content.scrollHeight + 'px; }');
 			
 		}
@@ -1574,7 +1572,7 @@ function closeFoldClickOutside(e) {
 		
 		forEach('.fold.mobile, .tool', function (el) { // ... closes all burger nav menus and tooltips
 			
-			el.removeAttribute(aria_expanded);
+			el.removeAttribute('aria-expanded');
 			
 		});
 		
@@ -1649,7 +1647,7 @@ addEventHandler(window, 'scroll', function() {  // Close fixed n-ovrl if its scr
 	
 	if (q('.fixed-mobile .fold.mobile[aria-expanded]')) {
 		
-		q('.fixed-mobile .fold.mobile[aria-expanded]').removeAttribute(aria_expanded);
+		q('.fixed-mobile .fold.mobile[aria-expanded]').removeAttribute('aria-expanded');
 	
 	}
 	
@@ -2070,7 +2068,7 @@ function init() {
 			if (hasClass(q('html'), 'can-touch')) {
 	
 				toggleClass(e.target, 'open');
-// 				toggleAttribute(e.target, aria_expanded);
+// 				toggleAttribute(e.target, 'aria-expanded');
 					
 			}
 
