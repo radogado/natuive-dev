@@ -65,6 +65,12 @@ function q(selector) {
 
 }
 
+function qq(selector) {
+	
+	return document.querySelector(selector);
+	
+}
+
 /*	q Prototype Functions
 ============================*/
 
@@ -126,5 +132,18 @@ q.prototype = {
 	}
 
 };
+
+var i = 0;
+var start = new Date().getTime();
+
+for (; i < 1000000; i++) {
+
+	qq('p');
+// 	document.querySelector('p');
+
+}
+
+var end = new Date().getTime();
+console.log(end - start);
 
 </script>
