@@ -19,7 +19,7 @@ function ready(fn) {
 
 }
 
-var Module = (function () {
+var nui = (function () {
 
 	console.log('starting main module');
 
@@ -38,18 +38,25 @@ var Module = (function () {
   };
   
   console.log('startup components ' + components);
-  
+
+	function initComponents(host) {
+	
+		for (var key in nui.components) {
+		
+		    nui.components[key][0].init(host);
+		
+		}
+	
+	}
+	  
   ready(function () {
 	  
   	console.log('on ready components ' + components);
-
-	for (var key in Module.components) {
-	
-	    Module.components[key][0].init();
-	
-	}	  
-	  
+  	initComponents(document.querySelector('body'));
+  	
   });
+  
+  // Set up a Mutation Observer which calls initComponents(host)
 
   return {
     someMethod: someMethod,
@@ -59,24 +66,30 @@ var Module = (function () {
   
 })();
 
-var component_tooltip = (function (Module) {
+var component_tooltip = (function (nui) {
     
 	console.log('starting extension module');
 	
 	var selector = '.tool';
-	var init = function () {
+	var init = function (host) {
 		
 		console.log('initialising tooltips ' + document.querySelectorAll(selector));
+		host.querySelectorAll(selector + ':not([data-ready])').forEach( function(el) {
+			
+			el.setAttribute('data-ready', true);
+			
+		});
 		
 	};
-	Module.components['tooltip'] = new Array;
-	Module.components['tooltip'].push({ selector: selector, init: init });
+	var $ = nui;
+	$.components['tooltip'] = new Array;
+	$.components['tooltip'].push({ selector: selector, init: init });
 
-//     return Module;
+//     return nui;
     
-})(Module || {});
+})(nui || {});
 
-var component_slider = (function (Module) {
+var component_slider = (function (nui) {
     
 	console.log('starting extension module');
 	
@@ -86,9 +99,9 @@ var component_slider = (function (Module) {
 		console.log('initialising sliders ' + document.querySelectorAll(selector));
 		
 	};
-	Module.components['slider'] = new Array;
-	Module.components['slider'].push({ selector: selector, init: init });
+	nui.components['slider'] = new Array;
+	nui.components['slider'].push({ selector: selector, init: init });
 
-//     return Module;
+//     return nui;
     
-})(Module || {});
+})(nui || {});
