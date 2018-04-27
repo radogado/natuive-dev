@@ -1,3 +1,5 @@
+var nui = (function () {
+
 function ready(fn) {
 
   if (document.readyState != 'loading') {
@@ -18,8 +20,6 @@ function ready(fn) {
   }
 
 }
-
-var nui = (function () {
 
 	console.log('starting main module');
 
