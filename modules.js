@@ -1,44 +1,49 @@
-var nui = (function () {
+// JS file = "var nui = (function (){" + core JS + "concatenated ./components/*/*.js" + "})();"
+// CSS file = "core SSS" + "concatenated ./components/*/*.css"
+// inheritable components like Slider (to be inherited by Lightbox) to be named var componentSlider = (function (){ ... 
+// Lite natUIve to include only a subset of ./components, minus Grid with Inline Popups, Parallax, Sortable tables etc
 
-function ready(fn) {
+var nui = (function (){
 
-  if (document.readyState != 'loading') {
-
-    fn();
-
-  } else if (document.addEventListener) {
-
-    document.addEventListener('DOMContentLoaded', fn);
-
-  } else {
-
-    document.attachEvent('onreadystatechange', function() {
-    	if (document.readyState != 'loading')
-        	fn();
-    });
-
-  }
-
-}
+	function ready(fn) {
+	
+	  if (document.readyState != 'loading') {
+	
+	    fn();
+	
+	  } else if (document.addEventListener) {
+	
+	    document.addEventListener('DOMContentLoaded', fn);
+	
+	  } else {
+	
+	    document.attachEvent('onreadystatechange', function(){
+	    	if (document.readyState != 'loading')
+	        	fn();
+	    });
+	
+	  }
+	
+	}
 
 	console.log('starting main module');
-
+	
 	var components = new Array;
 
-  var privateMethod = function () {
-    // private
-  };
-
-  var someMethod = function () {
-    // public
-  };
-
-  var anotherMethod = function () {
-    // public
-  };
-  
-  console.log('startup components ' + components);
-
+	var privateMethod = function (){
+	// private
+	};
+	
+	var someMethod = function (){
+	// public
+	};
+	
+	var anotherMethod = function (){
+	// public
+	};
+	
+	console.log('startup components ' + components);
+	
 	function initComponents(host) {
 	
 		for (var key in nui.components) {
@@ -49,26 +54,20 @@ function ready(fn) {
 	
 	}
 	  
-  ready(function () {
+	ready(function (){
 	  
-  	console.log('on ready components ' + components);
-  	initComponents(document.querySelector('body'));
-  	
-  });
+		console.log('on ready components ' + components);
+		initComponents(document.querySelector('body'));
+		
+	});
   
   // Set up a Mutation Observer which calls initComponents(host)
 
-  return {
-    someMethod: someMethod,
-    anotherMethod: anotherMethod,
-    components: components
-  };
-  
-})();
+// Main – end
 
 // Component Tooltip – start
 
-(function (nui) {
+(function (){
     
 	console.log('starting extension module');
 	
@@ -83,32 +82,44 @@ function ready(fn) {
 		});
 		
 	};
-	nui.components['tooltip'] = new Array;
-	nui.components['tooltip'].push({ selector: selector, init: init });
+	components['tooltip'] = new Array;
+	components['tooltip'].push({ selector: selector, init: init });
 
 //     return nui;
     
-})(nui || {});
+})();
 
 // Component Tooltip – end
 
 // Component Slider – start
 
-(function (nui) {
+(function (){
     
 	console.log('starting extension module');
 	
 	var selector = '.slider';
-	var init = function () {
+	var init = function (){
 		
 		console.log('initialising sliders ' + document.querySelectorAll(selector));
 		
 	};
-	nui.components['slider'] = new Array;
-	nui.components['slider'].push({ selector: selector, init: init });
+	components['slider'] = new Array;
+	components['slider'].push({ selector: selector, init: init });
 
 //     return nui;
     
-})(nui || {});
+})();
 
 // Component Slider – end
+
+
+// Main – end
+
+  return {
+    someMethod: someMethod,
+    anotherMethod: anotherMethod,
+    components: components
+  };
+  
+})();
+
