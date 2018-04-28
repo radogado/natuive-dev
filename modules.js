@@ -1,4 +1,4 @@
-// JS file = "var nui = (function (){" + core JS + "concatenated ./components/*/*.js" + "})();"
+// JS file = "var nui = (function (){" + core JS + "concatenated ./components/*/*.js" + "return { ... } })();"
 // CSS file = "core SSS" + "concatenated ./components/*/*.css"
 // inheritable components like Slider (to be inherited by Lightbox) to be named var componentSlider = (function (){ ... 
 // Lite natUIve to include only a subset of ./components, minus Grid with Inline Popups, Parallax, Sortable tables etc
@@ -46,9 +46,9 @@ var nui = (function (){
 	
 	function initComponents(host) {
 	
-		for (var key in nui.components) {
+		for (var key in components) {
 		
-		    nui.components[key][0].init(host);
+		    components[key][0].init(host);
 		
 		}
 	
