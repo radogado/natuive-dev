@@ -66,7 +66,9 @@ function ready(fn) {
   
 })();
 
-var component_tooltip = (function (nui) {
+// Component Tooltip – start
+
+(function (nui) {
     
 	console.log('starting extension module');
 	
@@ -81,15 +83,18 @@ var component_tooltip = (function (nui) {
 		});
 		
 	};
-	var $ = nui;
-	$.components['tooltip'] = new Array;
-	$.components['tooltip'].push({ selector: selector, init: init });
+	nui.components['tooltip'] = new Array;
+	nui.components['tooltip'].push({ selector: selector, init: init });
 
 //     return nui;
     
 })(nui || {});
 
-var component_slider = (function (nui) {
+// Component Tooltip – end
+
+// Component Slider – start
+
+(function (nui) {
     
 	console.log('starting extension module');
 	
@@ -105,3 +110,5 @@ var component_slider = (function (nui) {
 //     return nui;
     
 })(nui || {});
+
+// Component Slider – end
