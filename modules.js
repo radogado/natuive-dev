@@ -30,6 +30,13 @@ var nui = (function (){
 	
 	var components = new Array;
 
+	function registerComponent(name, selector, init) {
+
+		components[name] = new Array;
+		components[name].push({ selector: selector, init: init });
+	
+	}
+
 	var privateMethod = function (){
 	// private
 	};
@@ -82,8 +89,7 @@ var nui = (function (){
 		});
 		
 	};
-	components['tooltip'] = new Array;
-	components['tooltip'].push({ selector: selector, init: init });
+	registerComponent('tooltip', selector, init);
 
 //     return nui;
     
@@ -103,8 +109,7 @@ var nui = (function (){
 		console.log('initialising sliders ' + document.querySelectorAll(selector));
 		
 	};
-	components['slider'] = new Array;
-	components['slider'].push({ selector: selector, init: init });
+	registerComponent('slider', selector, init);
 
 //     return nui;
     
