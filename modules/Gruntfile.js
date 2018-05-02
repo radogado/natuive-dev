@@ -3,16 +3,19 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		'sass': {
 			dist: { 
-				files: {
-					'modules-core.css': 'modules-core.scss',
-					'components/**/*.css': 'components/**/*.scss'
-					}
+				files: [{
+					expand: true,
+						cwd: "components",
+					  src: ["**/*.scss"],
+					  dest: "components",
+					  ext: ".css"
+					}]
 				}
 		},
 		'concat': {
 		  options: {
 		    // define a string to put between each file in the concatenated output
-		    separator: ';'
+		    separator: ''
 		  },
 		  JS: {
 		    // the files to concatenate
@@ -22,9 +25,9 @@ module.exports = function(grunt) {
 		  },
 		  CSS: {
 		    // the files to concatenate
-		    src: ['components/**/*.css'],
+		    src: ['modules-core.css', 'components.css'],
 		    // the location of the resulting JS file
-		    dest: 'components.css'
+		    dest: 'modules.css'
 		  }
 		},
 		'cssmin': {
@@ -34,7 +37,7 @@ module.exports = function(grunt) {
 		  },
 		  target: {
 		    files: {
-		      'modules.min.css': ['modules-core.css', 'components.css']
+		      'modules.min.css': ['modules.css']
 		    }
 		  }
 		},

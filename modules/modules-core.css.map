@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,IAAK;EAEJ,SAAS,EAAE,IAAI",
+"sources": ["modules-core.scss"],
+"names": [],
+"file": "modules-core.css"
+}
