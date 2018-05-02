@@ -2,7 +2,12 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		'sass': {
-			dist: { 
+			core: { 
+				files: {
+					'modules-core.css': 'modules-core.scss'
+					}
+				},
+			dist: {
 				files: [{
 					expand: true,
 						cwd: "components",
@@ -19,13 +24,18 @@ module.exports = function(grunt) {
 		  },
 		  JS: {
 		    // the files to concatenate
-		    src: ['components/**/*.js'],
+			    options: {
+		      separator: ';',
+		      banner: 'var nui = (function(){',
+		      footer: 'return { init: init, animate: animate, copyButton: copyButton, openFullWindow: openFullWindow, closeFullWindow: closeFullWindow, notify: notify, addComponent: addComponent, makeSlider: makeSlider }; })();'
+		    },
+		    src: ['modules-core.js', 'components/**/*.js'],
 		    // the location of the resulting JS file
-		    dest: 'components.js'
+		    dest: 'modules.js'
 		  },
 		  CSS: {
 		    // the files to concatenate
-		    src: ['modules-core.css', 'components.css'],
+		    src: ['modules-core.css', 'components/**/*.css'],
 		    // the location of the resulting JS file
 		    dest: 'modules.css'
 		  }
@@ -44,7 +54,7 @@ module.exports = function(grunt) {
 		'closure-compiler': {
 		frontend: {
 		  closurePath: './node_modules/closure-compiler',
-		  js: ['modules-core.js', 'components.js'],
+		  js: 'modules.js',
 		  jsOutputFile: 'modules.min.js',
 		  maxBuffer: 500,
 		  noreport: true,

@@ -1,4 +1,4 @@
-// JS file = "var nui = (function (){" + core JS + "concatenated ./components/*/*.js" + "return { ... } })();"
+var nui = (function(){// JS file = "var nui = (function (){" + core JS + "concatenated ./components/*/*.js" + "return { ... } })();"
 // CSS file = "core SSS" + "concatenated ./components/*/*.css"
 // inheritable components like Slider (to be inherited by Lightbox) to be named var componentSlider = (function (){ ... 
 // Lite natUIve to include only a subset of ./components, minus Grid with Inline Popups, Parallax, Sortable tables etc
@@ -86,3 +86,51 @@
 })();
 */
 
+;// Component Slider – start
+
+(function (){
+    
+	console.log('starting extension module');
+	
+	var selector = '.slider';
+	var init = function (){
+		
+		console.log('initialising sliders ' + document.querySelectorAll(selector));
+		
+	};
+	registerComponent('slider', selector, init);
+
+//     return nui;
+    
+})();
+
+// Component Slider – end
+
+
+// Main – end
+;// Component Tooltip – start
+
+(function (){
+    
+	console.log('starting extension module');
+	
+	var selector = '.tool';
+	var init = function (host) {
+		
+		console.log('initialising tooltips ' + document.querySelectorAll(selector));
+		host.querySelectorAll(selector + ':not([data-ready])').forEach( function(el) {
+			
+			el.setAttribute('data-ready', true);
+			
+		});
+		
+	};
+	registerComponent('tooltip', selector, init);
+
+//     return nui;
+    
+})();
+
+// Component Tooltip – end
+
+return { init: init, animate: animate, copyButton: copyButton, openFullWindow: openFullWindow, closeFullWindow: closeFullWindow, notify: notify, addComponent: addComponent, makeSlider: makeSlider }; })();
