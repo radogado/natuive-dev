@@ -1,6 +1,6 @@
 // Component Slider – start
 
-(function (){
+var componentSlider = (function (){
     
 	console.log('starting extension module');
 	

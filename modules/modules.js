@@ -88,7 +88,7 @@ var nui = (function(){// JS file = "var nui = (function (){" + core JS + "concat
 
 ;// Component Slider – start
 
-(function (){
+var componentSlider = (function (){
     
 	console.log('starting extension module');
 	
