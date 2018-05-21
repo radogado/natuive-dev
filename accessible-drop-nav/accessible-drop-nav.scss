@@ -1,4 +1,113 @@
 $nav-bg: #fff; // fallback for browsers unsupporting CSS variables
+$line-height-em: 1.5em;
+
+nav {
+	
+	vertical-align: baseline;
+	display: inline-block;
+
+}
+
+	nav ul {
+	
+		margin: 0 0 0 -.5em;
+		padding: 0;
+		display: inline-block;
+		width: auto;
+		list-style: none;
+		display: flex;
+	    flex-wrap: wrap;
+
+	}
+	
+	nav.scroll {
+		
+		overflow: auto;
+			max-width: 100%;
+		
+	}
+	
+	nav.scroll > ul {
+		
+		display: flex;
+	    padding: .25em 0;
+		flex-wrap: nowrap;
+		white-space: nowrap;
+    		
+	}
+	
+	@supports (--a: 1) {
+		
+		nav.scroll a {
+			
+			padding: 0;
+
+		}
+		
+		nav.scroll > ul {
+	
+		    overflow: auto;
+		    max-width: 100%;
+		    transform: translate3d(0, 0, 0); // Safari macOS bug fix when using scrollbars: Not working initially.
+		    -webkit-overflow-scrolling: touch;
+	
+		}
+	
+		nav.scroll ul li {
+	
+		    padding: $line-height-em/2;
+	
+		}
+	
+	}
+
+	nav a {
+		
+		position: relative;
+		padding: 0 .5em;
+
+	}
+	
+	nav .active a[href] {
+		
+		text-decoration: none;
+		opacity: .7;
+
+	}
+	
+	nav:not(.drop) a[href^='#'] {
+		
+		text-decoration: none;
+
+	}
+	
+	nav li:last-child a, nav .vertical li a {
+		
+		padding-right: 0;
+
+	}
+
+	nav ul li {
+	
+		margin: 0;
+	
+	}
+
+	nav li:last-child {
+
+		margin-right: 0;
+
+	}
+
+	main nav ul {
+	
+		padding-left: 0;
+	
+	}
+	
+// Drop nav
+
+$nav-bg: #fff; // fallback for browsers unsupporting CSS variables
 
 nav.drop {
 
@@ -22,6 +131,7 @@ nav.drop ul ul {
 	left: 0;
 	background-color: $nav-bg;
 	background-color: var(--nav-bg);
+	top: 100%;
 
 }
 
@@ -45,7 +155,7 @@ nav.drop li {
 	
 }
 
-nav.drop li[aria-haspopup]:not([tabindex]) {
+/* nav.drop li[aria-haspopup]:not([tabindex]) */ nav.drop li:not([tabindex]) > ul ~ a {
 
 	padding-right: 42px;
 
@@ -58,11 +168,9 @@ nav.drop li > a {
 
 }
 
-:focus { // Because default focus indication is overlapped in Chrome for Windows
+nav.drop a:focus, nav.drop li > :focus {
 
-	outline-offset: -1px;
-	outline-style: dashed;
-	outline-width: 1px;
+	outline-offset: -7px;
 
 }
 
@@ -74,8 +182,8 @@ nav.drop a[href] {
 
 nav.drop li:not([aria-haspopup]) > a {
 	
-    margin-right: 42px;
-	z-index: 1;
+//     margin-right: 42px;
+	z-index: 0;
 // 	padding-right: 0;
 	
 }
@@ -106,6 +214,7 @@ nav.drop ul ul:not([aria-expanded]) {
 	max-height: 0;
 // 	z-index: 2;
 	overflow: hidden;
+	position: absolute;
 
 }
 
@@ -130,37 +239,49 @@ nav.drop li > input {
 	-moz-appearance: none;
 	display: block;
 	position: absolute;
-	margin: -4.75em 0 0 0;
+// 	margin: -4.75em 0 0 0;
 	width: 100%; // iOS doesn't work with left/right
 	height: 100%; 
 	border: none;
 	border-radius: 0;
+	right: 0;
+	z-index: 1;
+	width: 2em;
 				
 }
 
-nav.drop li > input, nav.drop li[aria-haspopup] {
+/* nav.drop li > input,  */nav.drop li > ul ~ a, nav.drop li[aria-haspopup] {
 	
-	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAPUlEQVR4AY3MgQUAMBBD0ZKVs9ZNWOihJY5EwweerB5+epAphdVtUylEgJiw7JtC8woHKYgJYr4lyJuDuQMkSiBhTevZ/AAAAABJRU5ErkJggg==');
+	background-image: url('data:image/svg+xml,%3Csvg%20width%3D%22100%22%20height%3D%22100%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M50%20100L0%200h100z%22%20fill-rule%3D%22evenodd%22/%3E%3C/svg%3E');
 	background-repeat: no-repeat;
-	background-position: calc(100% - 16px) 1.25em;
+	background-position: calc(100% - 16px) 50%;
+	background-size: .5em;
 
 }
 
+nav.drop[data-ready] li > ul ~ a {
+	
+	background: none;
+	
+}
+
+/*
 nav.drop li > input {
 	
-	background-position-y: 50%;
+	background-position-y: 2.75em;
 	
 }
+*/
 
-nav.drop li li > input, nav.drop li li[aria-haspopup] {
+/* nav.drop li li > input,  */nav.drop li li > ul ~ a, nav.drop li li[aria-haspopup] {
 
-	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAALElEQVR4AWMAAmaiMJQoAeK1xCr8DcVrCSpEwyUEFGJqoJrCEoKeoTx4iMEALSggYbbu0bQAAAAASUVORK5CYII=');
+	background-image: url('data:image/svg+xml,%3Csvg%20width%3D%22100%22%20height%3D%22100%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M100%2050L0%20100V0z%22%20fill-rule%3D%22evenodd%22/%3E%3C/svg%3E');
 
 }
 
 nav.drop li[aria-haspopup] {
 	
-	padding-right: 42px;
+	padding-right: calc(42px - 1em);
 				
 }
 
@@ -172,6 +293,7 @@ nav.drop li[aria-haspopup] {
 		
 			transition: .1s .2s;
 			opacity: 0;
+			position: absolute;
 		
 		}
 		
@@ -182,7 +304,11 @@ nav.drop li[aria-haspopup] {
 			
 		}
 
-		nav.drop > ul > li:hover > ul, nav.drop > ul li ul li:hover ul, nav.drop ul ul :checked ~ ul:not([aria-expanded]) {
+		nav.drop > ul > li:not([aria-haspopup]):hover > ul,
+		nav.drop > ul 		> li:hover > ul,
+		nav.drop > ul li ul > li:hover > ul,
+		nav.drop ul ul :checked ~ ul:not([aria-expanded]),
+		nav.drop > ul li:not([aria-haspopup]) ul li:hover ~ ul {
 			
 			max-height: none;
 			overflow: visible;
@@ -191,15 +317,19 @@ nav.drop li[aria-haspopup] {
 			
 		}
 		
-		nav.drop > ul > li:hover > input:not(:checked) ~ ul, nav.drop > ul li ul li:hover input:not(:checked) ~ ul {
+		nav.drop > ul 		> li:hover > input:not(:checked) ~ ul,
+		nav.drop > ul li ul > li:hover > input:not(:checked) ~ ul,
+		html:not(.can-touch) nav.drop > ul > li:not([aria-haspopup]):hover > input:not(:checked) ~ ul,
+		html:not(.can-touch) nav.drop > ul li:not([aria-haspopup]) ul li:hover > input:not(:checked) ~ ul {
 			
 			min-height: 0;
 			max-height: 0;
 			overflow: hidden;
 			z-index: 1;
+			position: absolute;
 
 		}
-		
+
 		nav.drop > ul li ul li:hover ul {
 
 			transition-delay: 0.2s;
@@ -242,7 +372,7 @@ nav.drop li[aria-haspopup] {
 
 	nav.drop li > input, nav.drop li[aria-haspopup] {
 		
-		background-position-y: 1.25em;
+		background-position-y: 1.5em;
 	
 	}
 
